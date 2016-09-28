@@ -1,7 +1,8 @@
-# Logs
-logs
-*.log
-npm-debug.log*
+/node_modules/
+/dist/
+/npm-debug.log
+specs.js
+update_all_branches
 
 # Runtime data
 pids

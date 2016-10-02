@@ -1,6 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
-
-const docElement = document.documentElement;
+import {Injectable, ElementRef} from '@angular/core';
 
 /**
  *
@@ -27,8 +25,8 @@ const fullScreenVendorAPI = {
 
 
 var fullScreenService = {
-  request: getFullScreenAPIComponent(docElement, fullScreenVendorAPI.request),
-  cancel:  getFullScreenAPIComponent(docElement, fullScreenVendorAPI.request)
+  request: getFullScreenAPIComponent(document.documentElement, fullScreenVendorAPI.request),
+  cancel:  getFullScreenAPIComponent(document, fullScreenVendorAPI.cancel)
 };
 
 /**
@@ -42,8 +40,22 @@ var fullScreenService = {
 @Injectable()
 export class FullScreenDOMService {
   constructor() {}
-  public request(): string {
-    return fullScreenService.request
+  private request(nativeElement): string {
+    return nativeElement[fullScreenService.request]();
+  }
+
+  public requestForElement(elRef: ElementRef) {
+    this.request(elRef.nativeElement);
+  }
+
+  public requestForSelector(selector: string) {
+    const fullScreenTargetArr = document.querySelectorAll(selector);
+    const targetNativeElement = fullScreenTargetArr[0];
+    this.request(targetNativeElement);
+  }
+
+  public cancel(): string {
+    return document[fullScreenService.cancel]();
   }
 
   public isSupported() {

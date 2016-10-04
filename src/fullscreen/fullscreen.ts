@@ -10,32 +10,30 @@ export class FullScreen {
   @Input() fullScreenTarget: string;
   private fullScreenChangeListener;
   
-  constructor(private _el: ElementRef, private fullScreenEventService: FullScreenEventService, private fullScreenService: FullScreenDOMService) {
+  constructor(private elRef: ElementRef, private fullScreenEventService: FullScreenEventService, private fullScreenService: FullScreenDOMService) {
     console.log("created directive");
   }
 
   ngOnInit() {
     this.fullScreenChangeListener =  this.fullScreenEventService.addListener((event) => {
-      console.log("isTarget ----", event.target === this._el.nativeElement);
+      // console.log("isTarget ----", event.target === this.elRef.nativeElement);
     });
   }
 
+  
   ngOnDestroy() {
     this.fullScreenEventService.removeListener(this.fullScreenChangeListener);
   }
 
   @HostListener('click') onClick() {
-    const requestString = this.fullScreenService.request();
     let targetFullScreenElement;
     if(this.fullScreenTarget !== undefined && this.fullScreenTarget.trim().length >= 0) {
-      const fullScreenTargetArr = document.querySelectorAll(this.fullScreenTarget);
-      //TODO : Check vailidity and thow exception
-      targetFullScreenElement = fullScreenTargetArr[0];
+      this.fullScreenService.requestForSelector(this.fullScreenTarget);
     } else {
       // If no target specified use the current element
-      targetFullScreenElement = this._el.nativeElement;
+      this.fullScreenService.requestForElement(this.elRef);
+
     }
-    targetFullScreenElement[requestString]();
   }
 }
 

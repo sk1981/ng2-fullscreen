@@ -1,4 +1,4 @@
-import {Injectable, ElementRef} from '@angular/core';
+import {Injectable, ElementRef, Renderer} from '@angular/core';
 
 /**
  *
@@ -39,8 +39,9 @@ var fullScreenService = {
  */
 @Injectable()
 export class FullScreenDOMService {
-  constructor() {}
+  constructor(private renderer: Renderer) {}
   private request(nativeElement): string {
+    this.renderer.setElementClass(nativeElement, 'fullscreen', true);
     return nativeElement[fullScreenService.request]();
   }
 

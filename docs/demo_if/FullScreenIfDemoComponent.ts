@@ -6,8 +6,9 @@ import {
 @Component({
   selector: 'basic-app',
   template: `
-    <h3>Full Screen If Component</h3>
-    <p>Below component </p>
+    <h3>Full Screen Target Component</h3>
+    <p>We can toggle the element based on another variable</p>
+    <p>All we need to do is apply the directive [(fullscreenIf)]= to any variable on whose value we want the full screen element</p>
     <div [(fullscreenIf)]="isFull">another FullScreen Element
       <button (click)="myChange($event)">Toggle FS</button>
     </div>

@@ -5,12 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FullScreenModule } from '../src/index';
 import { FullScreenIfDemoComponent } from './demo_if/FullScreenIfDemoComponent';
 import { BasicComponent } from './demo_basic/BasicComponent';
+import { DemoOverviewComponent } from './DemoOverviewComponent';
+import { DemoMainComponent } from './DemoMainComponent';
 import { FullScreenTargetDemoComponent } from './demo_target/FullScreenTargetDemoComponent';
 
-console.log("-----------------------------------------------");
-
 const DemoAppRoutes = [
-  { path: '', component: BasicComponent },
+  { path: '', component: DemoOverviewComponent },
+  { path: 'basic', component: BasicComponent },
   { path: 'targetdemo', component: FullScreenTargetDemoComponent },
   { path: 'ifdemo', component: FullScreenIfDemoComponent }
 ];
@@ -21,11 +22,12 @@ const DemoAppRoutes = [
     FullScreenModule,
     RouterModule.forRoot(DemoAppRoutes)
   ],
-  declarations: [ BasicComponent, FullScreenIfDemoComponent , FullScreenTargetDemoComponent],
-  bootstrap:    [ BasicComponent  ]
+  declarations: [ DemoMainComponent, DemoOverviewComponent, BasicComponent, FullScreenIfDemoComponent , FullScreenTargetDemoComponent],
+  bootstrap:    [ DemoMainComponent  ]
 })
 class AppModule { }
 
 const platform = platformBrowserDynamic();
 //noinspection TypeScriptValidateTypes
 platform.bootstrapModule(AppModule);
+

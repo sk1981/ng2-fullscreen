@@ -6,12 +6,12 @@ import {
 @Component({
   selector: 'basic-app',
   template: `
-    <h3>Full Screen Component</h3>
-    <p>Click the below below to make the component fullscreen</p>
+    <h3>Basic Full Screen Component</h3>
+    <p>We can make an element fullscreen on clicking it</p>
+    <p>All we need to do is apply the directive fullscreen directive to it</p>
     <div fullscreen>
       <img src="./resources/image.jpg"/>
-    </div>
-  `,
+    </div>  `,
   styles : [
     `div {height: 300px; width:300px;}`,
     `img {height: 100%; display: block; margin:auto}`,

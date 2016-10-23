@@ -29,6 +29,8 @@ var fullScreenService = {
   cancel:  getFullScreenAPIComponent(document, fullScreenVendorAPI.cancel)
 };
 
+
+
 /**
  * Add event here :
  * TODO : figure out what would be the best way to do one time setup
@@ -40,19 +42,13 @@ var fullScreenService = {
 @Injectable()
 export class FullScreenDOMService {
   constructor(private renderer: Renderer) {}
-  private request(nativeElement): string {
-    this.renderer.setElementClass(nativeElement, 'fullscreen', true);
+  public request(nativeElement): string {
     return nativeElement[fullScreenService.request]();
   }
 
-  public requestForElement(elRef: ElementRef) {
-    this.request(elRef.nativeElement);
-  }
-
-  public requestForSelector(selector: string) {
-    const fullScreenTargetArr = document.querySelectorAll(selector);
-    const targetNativeElement = fullScreenTargetArr[0];
-    this.request(targetNativeElement);
+  public getElementBySelector(selectorString) {
+    const fullScreenTargetArr = document.querySelectorAll(selectorString);
+    return fullScreenTargetArr[0];
   }
 
   public cancel(): string {
@@ -61,5 +57,9 @@ export class FullScreenDOMService {
 
   public isSupported() {
     return fullScreenService.request !== undefined
+  }
+
+  handleFullScreenChange(nativeElement, isFullScreen:boolean) {
+    this.renderer.setElementClass(nativeElement, 'fullscreen', isFullScreen);
   }
 }

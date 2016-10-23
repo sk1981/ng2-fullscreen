@@ -17,13 +17,16 @@ export class FullScreenIf implements OnChanges, OnDestroy {
   private isFullScreen = false;
   @Input('fullscreenIf') fullscreenIf: boolean = this.isFullScreen;
   @Output() fullscreenIfChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  private screenChangeListener;
+  private fullScreenChangeListener;
 
   constructor(private elRef: ElementRef, private fullScreenService: FullScreenDOMService, private fullScreenEventService: FullScreenEventService) {
-    this.screenChangeListener = fullScreenEventService.addListener((event) => {
+  }
+
+  ngOnInit() {
+    this.fullScreenChangeListener = this.fullScreenEventService.addListener((event) => {
       if(event.target === this.elRef.nativeElement) {
-       this.isFullScreen = !this.isFullScreen;
-        this.fullscreenIfChange.emit(this.fullscreenIf);
+        this.isFullScreen = !this.isFullScreen;
+        this.fullScreenService.handleFullScreenChange(this.elRef.nativeElement, this.isFullScreen);
       }
     });
   }
@@ -31,16 +34,14 @@ export class FullScreenIf implements OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     const value = changes['fullscreenIf'].currentValue;
     if(value) {
-      this.fullScreenService.requestForElement(this.elRef);
+      this.fullScreenService.request(this.elRef.nativeElement);
     } else {
       this.fullScreenService.cancel();
     }
   }
 
   ngOnDestroy() {
-    this.fullScreenEventService.removeListener(this.screenChangeListener)
+    this.fullScreenEventService.removeListener(this.fullScreenChangeListener);
   }
-
-
 }
 

@@ -1,6 +1,7 @@
 import { platformBrowserDynamic  } from '@angular/platform-browser-dynamic';
 import {RouterModule, Route}   from '@angular/router';
 import { NgModule }      from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { FullScreenModule } from '../src/index';
 import { FullScreenIfDemoComponent } from './demo_if/FullScreenIfDemoComponent';
@@ -20,7 +21,8 @@ const DemoAppRoutes = [
   imports:      [
     BrowserModule,
     FullScreenModule,
-    RouterModule.forRoot(DemoAppRoutes)
+    RouterModule.forRoot(DemoAppRoutes),
+    FormsModule
   ],
   declarations: [ DemoMainComponent, DemoOverviewComponent, BasicComponent, FullScreenIfDemoComponent , FullScreenTargetDemoComponent],
   bootstrap:    [ DemoMainComponent  ]

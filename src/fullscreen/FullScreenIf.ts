@@ -16,7 +16,7 @@ export class FullScreenIf implements OnChanges, OnDestroy {
    */
   private isFullScreen = false;
   @Input('fullscreenIf') fullscreenIf: boolean = this.isFullScreen;
-  @Output() fullscreenIfChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('fullscreenIfChange') fullscreenIfChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   private fullScreenChangeListener;
 
   constructor(private elRef: ElementRef, private fullScreenService: FullScreenDOMService, private fullScreenEventService: FullScreenEventService) {
@@ -26,6 +26,7 @@ export class FullScreenIf implements OnChanges, OnDestroy {
     this.fullScreenChangeListener = this.fullScreenEventService.addListener((event) => {
       if(event.target === this.elRef.nativeElement) {
         this.isFullScreen = !this.isFullScreen;
+        this.fullscreenIfChange .emit(this.isFullScreen);
         this.fullScreenService.handleFullScreenChange(this.elRef.nativeElement, this.isFullScreen);
       }
     });
@@ -44,4 +45,3 @@ export class FullScreenIf implements OnChanges, OnDestroy {
     this.fullScreenEventService.removeListener(this.fullScreenChangeListener);
   }
 }
-

@@ -18,7 +18,7 @@ import {
         <input type="button" (click)="screen.isFull=!screen.isFull" value="toggle"/>
     </div>
     <h2>Example Code</h2>
-    <div>Below is example template which can be used. Here screen.isFull is variable present on the component.</div>
+    <div>Below is example template which can be used. Here screen.isFull is variable present on the parent component.</div>
     <pre><code class="language-javascript">
       &lt;div [fullscreenIf]=&quot;screen.isFull&quot; (fullscreenIfChange)=&quot;screen.isFull=$event&quot;&gt;
           &lt;input type=&quot;radio&quot; [(ngModel)]=&quot;screen.isFull&quot; [value]=&quot;true&quot; name=&quot;toggle&quot; /&gt; Yes
